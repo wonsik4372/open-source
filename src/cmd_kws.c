@@ -87,3 +87,20 @@ int my_cp(int argc, char **argv) {
     close(dst);
     return 0;
 }
+
+int my_rm(int argc, char **argv) {
+    int i;
+    int ret = 0;                            /* 실패 여부 기록 */
+
+    if(argc < 2) {
+        fprintf(stderr, "rm: 파일 이름을 입력하세요\n");
+        return 1;
+    }
+    for(i = 1; i < argc; i++) {
+        if(unlink(argv[i]) < 0) {           /* 실패해도 나머지는 계속 삭제 */
+            perror(argv[i]);
+            ret = 1;
+        }
+    }
+    return ret;
+}
