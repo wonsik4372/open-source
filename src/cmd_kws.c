@@ -18,4 +18,20 @@ int my_rmdir(int argc, char **argv) {
     return 0;
 }
 
+int my_ln(int argc, char **argv) {
+    int ret;
 
+    if(argc == 4 && !strcmp(argv[1], "-s"))
+        ret = symlink(argv[2], argv[3]);
+    else if(argc == 3)
+        ret = link(argv[1], argv[2]);
+    else {
+        fprintf(stderr, "ln: ln [-s] 원본 링크\n");
+        return 1;
+    }
+    if(ret < 0) {
+        perror("ln");
+        return 1;
+    }
+    return 0;
+}

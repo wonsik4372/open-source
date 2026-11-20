@@ -158,7 +158,7 @@ void run(int narg, char **argv)
     narg = n;
 
     if (strcmp(argv[0], "rmdir") == 0) exit(my_rmdir(narg, argv));
-    
+    if (strcmp(argv[0], "ln") == 0) exit(my_ln(narg, argv));
 
     execvp(argv[0], argv);
     perror("execvp");
