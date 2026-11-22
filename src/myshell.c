@@ -38,6 +38,7 @@ int main()
 
         printf("shell> ");
         fflush(stdout);
+
         if (fgets(buf, 256, stdin) == NULL) {
             if (feof(stdin))
                 break;
@@ -45,6 +46,7 @@ int main()
             printf("\n");
             continue;
         }
+
         buf[strlen(buf) - 1] = '\0';
 
         narg = getargs(buf, argv);
@@ -157,9 +159,22 @@ void run(int narg, char **argv)
     }
     narg = n;
 
+    // 윤동현
     if (strcmp(argv[0], "mv") == 0) exit(my_mv(narg, argv));
     if (strcmp(argv[0], "cat") == 0) exit(my_cat(narg, argv));
     if (strcmp(argv[0], "grep") == 0) exit(my_grep(narg, argv));
+
+    // 강원식 
+    if (strcmp(argv[0], "rmdir") == 0) exit(my_rmdir(narg, argv));
+    if (strcmp(argv[0], "ln") == 0) exit(my_ln(narg, argv));
+    if (strcmp(argv[0], "cp") == 0) exit(my_cp(narg, argv));
+    if (strcmp(argv[0], "rm") == 0) exit(my_rm(narg, argv));
+
+    // 김민종 
+    if (strcmp(argv[0], "ls") == 0) exit(my_ls(narg, argv));
+    if (strcmp(argv[0], "pwd") == 0) exit(my_pwd(narg, argv));
+    if (strcmp(argv[0], "mkdir") == 0) exit(my_mkdir(narg, argv));
+
 
     execvp(argv[0], argv);
     perror("execvp");
