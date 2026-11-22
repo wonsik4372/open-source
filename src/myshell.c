@@ -5,7 +5,6 @@
 #include <string.h>
 #include <fcntl.h>
 #include <signal.h>
-
 #include <sys/wait.h>
 #include <unistd.h>
 #include "mycmd.h"
@@ -16,12 +15,10 @@ void handler(int signo);
 
 pid_t fgpid = 0;
 
-
 int main()
 {
     char buf[256];
     char *argv[50];
-
     char *argv2[50];
     int narg, i, j, bg, p[2], status;
     pid_t pid, pid2;
@@ -162,6 +159,11 @@ void run(int narg, char **argv)
     }
     narg = n;
 
+    // 윤동현
+    if (strcmp(argv[0], "mv") == 0) exit(my_mv(narg, argv));
+    if (strcmp(argv[0], "cat") == 0) exit(my_cat(narg, argv));
+    if (strcmp(argv[0], "grep") == 0) exit(my_grep(narg, argv));
+
     // 강원식 
     if (strcmp(argv[0], "rmdir") == 0) exit(my_rmdir(narg, argv));
     if (strcmp(argv[0], "ln") == 0) exit(my_ln(narg, argv));
@@ -179,7 +181,6 @@ void run(int narg, char **argv)
     exit(1);
 }
 
-
 void handler(int signo)
 {
     if (fgpid > 0) {
@@ -187,7 +188,6 @@ void handler(int signo)
         printf("\n[%d] Ctrl-Z 로 종료", fgpid);
     }
 }
-
 
 int getargs(char *cmd, char **argv)
 {

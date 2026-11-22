@@ -1,3 +1,8 @@
+// 윤동현 
+int my_mv(int argc, char **argv);
+int my_cat(int argc, char **argv);
+int my_grep(int argc, char **argv);
+
 // 강원식 
 int my_rmdir(int argc, char **argv);
 int my_ln(int argc, char **argv);
@@ -8,3 +13,4 @@ int my_ls(int argc, char **argv);
 int my_pwd(int argc, char **argv);
 int my_cd(int argc, char **argv);
 int my_mkdir(int argc, char **argv);
+
