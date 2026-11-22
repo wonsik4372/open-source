@@ -5,6 +5,7 @@
 #include <string.h>
 #include <fcntl.h>
 #include <signal.h>
+
 #include <sys/wait.h>
 #include <unistd.h>
 #include "mycmd.h"
@@ -15,10 +16,12 @@ void handler(int signo);
 
 pid_t fgpid = 0;
 
+
 int main()
 {
     char buf[256];
     char *argv[50];
+
     char *argv2[50];
     int narg, i, j, bg, p[2], status;
     pid_t pid, pid2;
@@ -38,6 +41,7 @@ int main()
 
         printf("shell> ");
         fflush(stdout);
+
         if (fgets(buf, 256, stdin) == NULL) {
             if (feof(stdin))
                 break;
@@ -45,6 +49,7 @@ int main()
             printf("\n");
             continue;
         }
+
         buf[strlen(buf) - 1] = '\0';
 
         narg = getargs(buf, argv);
@@ -157,15 +162,23 @@ void run(int narg, char **argv)
     }
     narg = n;
 
+    // 강원식 
     if (strcmp(argv[0], "rmdir") == 0) exit(my_rmdir(narg, argv));
     if (strcmp(argv[0], "ln") == 0) exit(my_ln(narg, argv));
     if (strcmp(argv[0], "cp") == 0) exit(my_cp(narg, argv));
     if (strcmp(argv[0], "rm") == 0) exit(my_rm(narg, argv));
 
+    // 김민종 
+    if (strcmp(argv[0], "ls") == 0) exit(my_ls(narg, argv));
+    if (strcmp(argv[0], "pwd") == 0) exit(my_pwd(narg, argv));
+    if (strcmp(argv[0], "mkdir") == 0) exit(my_mkdir(narg, argv));
+
+
     execvp(argv[0], argv);
     perror("execvp");
     exit(1);
 }
+
 
 void handler(int signo)
 {
@@ -174,6 +187,7 @@ void handler(int signo)
         printf("\n[%d] Ctrl-Z 로 종료", fgpid);
     }
 }
+
 
 int getargs(char *cmd, char **argv)
 {
